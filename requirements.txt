@@ -1,0 +1,9 @@
+autopep8
+bandit
+coverage
+flake8-docstrings
+flake8-import-order
+pep8-naming
+pip-chill
+pip-review
+virtualenvwrapper
