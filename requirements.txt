@@ -1,6 +1,7 @@
 bottleneck
 cairosvg
 invoke
+ipynb-py-convert
 jupyterlab
 matplotlib
 numexpr
