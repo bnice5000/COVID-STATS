@@ -14,7 +14,7 @@ def build(c, docs=False):
 
 @task
 def push(c, docs=False):
-    c.run('git add -u .')
+    c.run('git add --all')
     commit_message = '\"Daily push for {:%Y%m%d}\"'.format(datetime.date.today())
-    c.run('git commit -m {0}'.format(commit_message))
+    c.run('git commit -am {0}'.format(commit_message))
     c.run('git push origin master')
