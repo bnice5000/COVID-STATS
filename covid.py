@@ -39,6 +39,7 @@ folder = './Graphics/{:%Y%m%d}'.format(datetime.date.today())
 os.makedirs(folder, 0o755, exist_ok=True)
 os.chdir(folder)
 
+# This does not work on bar graphs. See https://github.com/pandas-dev/pandas/issues/1918
 tickFormatter = matplotlib.dates.DateFormatter('%m-%d')
 
 with matplotlib.pyplot.xkcd():
