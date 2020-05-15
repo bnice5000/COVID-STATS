@@ -1,18 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 import datetime
 import os
 
 import matplotlib
 
 import pandas
-
-import pprint
-
-get_ipython().run_line_magic('matplotlib', 'osx')
 
 COVID_Raw = pandas.read_csv("COVID_Raw.csv")
 COVID_Raw['Date'] = pandas.to_datetime(COVID_Raw['Date'])
