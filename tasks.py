@@ -17,13 +17,15 @@ def build(c, docs=False):
     c.run('ipython covid.py')
 
 @task
-def push(c, docs=False):
+def push(c, tag=False, docs=False):
     c.run('git add --all')
     c.run('git commit -am {0}'.format(commit_message))
+    if tag:
+        c.run('git tag {0}'.format(foldername))
     c.run('git push origin master')
 
 @task
 def release(c, docs=False):
     c.run('zip -j ./Releases/{0}.zip ./Graphics/{0}/*'.format(foldername))
-    c.run('git tag {0}'.format(foldername))
+
     c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}.\" {0}'.format(foldername))
