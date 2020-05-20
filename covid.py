@@ -4,8 +4,8 @@
 import datetime
 import os
 
-import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 
 import pandas
 
