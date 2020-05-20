@@ -18,15 +18,17 @@ COVID_Raw[['Tested_Cum']] = COVID_Raw[['Tested_Raw']].cumsum()
 COVID_Raw[['Tested_Delta']] = COVID_Raw[['Tested_Raw']].pct_change()
 COVID_Raw[['Positive_Cum']] = COVID_Raw[['Positive_Raw']].cumsum()
 COVID_Raw[['Positive_Delta']] = COVID_Raw[['Positive_Raw']].pct_change()
-COVID_Raw['Tested_Positive_Ratio'] = (COVID_Raw['Positive_Raw'] / COVID_Raw['Tested_Raw']) * 100
 COVID_Raw[['Recovered_Cum']] = COVID_Raw[['Recovered_Raw']].cumsum()
 COVID_Raw[['Recovered_Delta']] = COVID_Raw[['Recovered_Raw']].pct_change()
 COVID_Raw[['Died_Cum']] = COVID_Raw[['Died_Raw']].cumsum()
 COVID_Raw[['Died_Delta']] = COVID_Raw[['Died_Raw']].pct_change()
 
 COVID_Raw = COVID_Raw.fillna(0)
-column_order = ['Tested_Raw', 'Tested_Cum', 'Tested_Delta', 'Positive_Raw', 'Positive_Cum', 'Positive_Delta',
-                'Tested_Positive_Ratio', 'Recovered_Raw', 'Recovered_Cum', 'Recovered_Delta', 'Died_Raw', 'Died_Cum', 'Died_Delta']
+
+COVID_Raw['Tested_Positive_Ratio'] = (COVID_Raw['Positive_Raw'] / COVID_Raw['Tested_Raw']) * 100
+COVID_Raw['Active_Infections'] = (COVID_Raw['Positive_Cum'] - COVID_Raw['Recovered_Cum'])
+
+column_order = ['Tested_Raw', 'Tested_Cum', 'Tested_Delta', 'Positive_Raw', 'Positive_Cum', 'Positive_Delta', 'Recovered_Raw', 'Recovered_Cum', 'Recovered_Delta', 'Died_Raw', 'Died_Cum', 'Died_Delta', 'Tested_Positive_Ratio', 'Active_Infections']
 
 
 date = '{:%Y%m%d}'.format(datetime.date.today())
