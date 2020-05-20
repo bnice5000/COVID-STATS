@@ -11,7 +11,7 @@ import pandas
 
 pandas.set_option('use_inf_as_na', True)
 
-COVID_Raw = pandas.read_csv("COVID_Raw.csv")
+COVID_Raw = pandas.read_csv("./Data/COVID_Raw.csv")
 COVID_Raw['Date'] = pandas.to_datetime(COVID_Raw['Date'])
 COVID_Raw = COVID_Raw.set_index('Date')
 COVID_Raw[['Tested_Cum']] = COVID_Raw[['Tested_Raw']].cumsum()
