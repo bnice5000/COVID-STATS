@@ -15,17 +15,17 @@ If you would like to run it using the invoke system, the following command will 
 
 ## Tested
 `Tested_Raw` is the reported data of how many people were tested using the WHO standard testing methodology.  
-`Tested_Cum` is the cumulative is a running total of all of the values.  
+`Tested_Cum` is the cumulative running total of all of the values.  
 `Tested_Delta` calculates percentage change between the current and a prior element.  
 
 ## Positive
 `Positive_Raw` is the reported data of how many people who had a positive test result using the WHO standard testing methodology.  
-`Positive_Cum` is the cumulative is a running total of all of the values.  
+`Positive_Cum` is the cumulative running total of all of the values.  
 `Positive_Delta` calculates percentage change between the current and a prior element.  
 
 ## Recovered
 `Recovered_Raw` is the reported data of how many people had two negative tests 24 hours apart using the WHO standard testing methodology.  
-`Recovered_Cum` is the cumulative is a running total of all of the values.  
+`Recovered_Cum` is the cumulative running total of all of the values.  
 `Recovered_Delta` calculates percentage change between the current and a prior element.  
 
 ## Tested
