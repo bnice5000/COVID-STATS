@@ -30,6 +30,11 @@ def release(c, docs=False):
     c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
 
 @task
+def clean():
+    c.run('rm -rf ./Graphics/{0}'.format(foldername))
+    c.run('/Releases/{0}.zip'.format(foldername))
+
+@task
 def rescind(c, docs=False):
     c.run('git tag -d {0}'.format(foldername))
     c.run('git push --delete origin {0}'.format(foldername))
