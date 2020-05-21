@@ -30,7 +30,7 @@ If you would like to run it using the invoke system, the following command will 
 
 ## Tested
 `Died_Raw` is the reported data of how many people who had a cessation of life functions due to COVID-19.  
-`Died_Cum` is the cumulative is a running total of all of the values.  
+`Died_Cum` is the cumulative running total of all of the values.  
 `Died_Delta` calculates percentage change between the current and a prior element.  
 
 ## Calculated Elements
