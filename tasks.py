@@ -30,7 +30,7 @@ def release(c, docs=False):
     c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
 
 @task
-def clean():
+def clean(c):
     c.run('rm -rf ./Graphics/{0}'.format(foldername))
     c.run('/Releases/{0}.zip'.format(foldername))
 
