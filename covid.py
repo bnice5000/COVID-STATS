@@ -131,8 +131,9 @@ with plt.xkcd():
     deltaFig = CPDelta_df.plot(kind='bar', title='Kosovo COVID-19 Cases -All Days')
     deltaFig.set_xticklabels(ticks, fontsize=8)
     deltaFig.minorticks_off()
+    deltaFig.figure.set_size_inches(11, 8.5)
     deltaFig.figure.tight_layout()
-    deltaFig.figure.savefig('Kosovo COVID-19 Positive Cases -ALL Days Bar.png', dpi=900)
+    deltaFig.figure.savefig('Kosovo COVID-19 Positive Cases -ALL Days Bar.png', dpi=600)
 
     CPDelta_df = COVID_Raw[['Tested_Raw', 'Positive_Raw', 'Tested_Positive_Ratio']].last('14D')
     ticks = CPDelta_df.index.strftime('%m-%d').values
