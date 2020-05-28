@@ -5,27 +5,27 @@ foldername = '{:%Y%m%d}'.format(datetime.date.today())
 commit_message = '\"Daily push for {0}\"'.format(foldername)
 
 @task
-def convertnb(c, docs=False):
+def convertnb(c):
     c.run('jupyter nbconvert --to script covid.ipynb')
 
 @task
-def convertpy(c, docs=False):
+def convertpy(c):
     c.run('ipynb-py-convert covid.py covid.ipynb')
 
 @task
-def build(c, docs=False):
+def build(c):
     c.run('ipython covid.py')
 
 @task
-def push(c, tag=False, docs=False):
+def push(c, tag=False, message=commit_message):
     c.run('git add --all')
-    c.run('git commit -am {0}'.format(commit_message))
+    c.run('git commit -am {0}'.format(message))
     if tag:
         c.run('git tag {0}'.format(foldername))
     c.run('git push origin master')
 
 @task
-def release(c, docs=False):
+def release(c):
     c.run('zip -j ./Releases/{0}.zip ./Graphics/{0}/*'.format(foldername))
     c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
 
@@ -35,7 +35,7 @@ def clean(c):
     c.run('/Releases/{0}.zip'.format(foldername))
 
 @task
-def rescind(c, docs=False):
+def rescind(c):
     c.run('git tag -d {0}'.format(foldername))
     c.run('git push --delete origin {0}'.format(foldername))
     c.run('hub release delete {0}'.format(foldername))

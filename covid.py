@@ -9,6 +9,17 @@ import matplotlib.pyplot as plt
 
 import pandas
 
+
+def addStats(df):
+    stats = df.describe(include='all')
+    stats.loc['var'] = df.var().tolist()
+    stats.loc['skew'] = df.skew().tolist()
+    stats.loc['kurt'] = df.kurtosis().tolist()
+    stats.loc['mad'] = df.mad().tolist()
+
+    return stats
+
+
 pandas.set_option('use_inf_as_na', True)
 
 COVID_Raw = pandas.read_csv("./Data/COVID_Raw.csv")
@@ -22,13 +33,17 @@ COVID_Raw[['Recovered_Cum']] = COVID_Raw[['Recovered_Raw']].cumsum()
 COVID_Raw[['Recovered_Delta']] = COVID_Raw[['Recovered_Raw']].pct_change()
 COVID_Raw[['Died_Cum']] = COVID_Raw[['Died_Raw']].cumsum()
 COVID_Raw[['Died_Delta']] = COVID_Raw[['Died_Raw']].pct_change()
+COVID_Raw[['Positive_2D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(2).mean()
 
 COVID_Raw = COVID_Raw.fillna(0)
 
 COVID_Raw['Tested_Positive_Ratio'] = (COVID_Raw['Positive_Raw'] / COVID_Raw['Tested_Raw']) * 100
 COVID_Raw['Active_Infections'] = (COVID_Raw['Positive_Cum'] - COVID_Raw['Recovered_Cum'])
 
-column_order = ['Tested_Raw', 'Tested_Cum', 'Tested_Delta', 'Positive_Raw', 'Positive_Cum', 'Positive_Delta', 'Recovered_Raw', 'Recovered_Cum', 'Recovered_Delta', 'Died_Raw', 'Died_Cum', 'Died_Delta', 'Tested_Positive_Ratio', 'Active_Infections']
+COVID_Raw[['Positive_2D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(2).mean()
+COVID_Raw[['Positive_3D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(3).mean()
+
+column_order = ['Tested_Raw', 'Tested_Cum', 'Tested_Delta', 'Positive_Raw', 'Positive_Cum', 'Positive_Delta', 'Positive_2D_Mean', 'Positive_3D_Mean', 'Recovered_Raw', 'Recovered_Cum', 'Recovered_Delta', 'Died_Raw', 'Died_Cum', 'Died_Delta', 'Tested_Positive_Ratio', 'Active_Infections']
 
 
 date = '{:%Y%m%d}'.format(datetime.date.today())
@@ -40,15 +55,15 @@ os.chdir(folder)
 # This does not work on bar graphs. See https://github.com/pandas-dev/pandas/issues/1918
 tickFormatter = mdates.DateFormatter('%m-%d')
 
-described_data_all = COVID_Raw.describe(include='all').fillna(0)
-described_data_l14 = COVID_Raw.last('14D').describe(include='all').fillna(0)
+described_data_all = addStats(COVID_Raw).fillna(0)
+described_data_l14 = addStats(COVID_Raw.last('14D')).fillna(0)
+
+
 
 with pandas.ExcelWriter('{0}_Kosovo_COVID.xlsx'.format(date)) as writer:
     described_data_l14.to_excel(writer, sheet_name='Statistics (L14)')
     described_data_all.to_excel(writer, sheet_name='Statistics (All)')
     COVID_Raw.fillna(0).to_excel(writer, sheet_name='Kosovo Raw Data', columns=column_order)
-
-
 
 with plt.xkcd():
 
@@ -129,7 +144,7 @@ with plt.xkcd():
     CPDelta_df = COVID_Raw[['Positive_Raw']]
     ticks = CPDelta_df.index.strftime('%m-%d').values
     deltaFig = CPDelta_df.plot(kind='bar', title='Kosovo COVID-19 Cases -All Days')
-    deltaFig.set_xticklabels(ticks, fontsize=8, rotation=90)
+    deltaFig.set_xticklabels(ticks, fontsize=8)
     deltaFig.minorticks_off()
     deltaFig.figure.set_size_inches(11, 8.5)
     deltaFig.figure.tight_layout()
