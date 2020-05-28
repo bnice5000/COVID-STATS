@@ -33,9 +33,8 @@ COVID_Raw[['Recovered_Cum']] = COVID_Raw[['Recovered_Raw']].cumsum()
 COVID_Raw[['Recovered_Delta']] = COVID_Raw[['Recovered_Raw']].pct_change()
 COVID_Raw[['Died_Cum']] = COVID_Raw[['Died_Raw']].cumsum()
 COVID_Raw[['Died_Delta']] = COVID_Raw[['Died_Raw']].pct_change()
-COVID_Raw[['Positive_2D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(2).mean()
-
-COVID_Raw = COVID_Raw.fillna(0)
+COVID_Raw[['Hospitalizations_Cum']] = COVID_Raw[['Hospitalizations_Raw']].cumsum()
+COVID_Raw[['Hospitalizations_Delta']] = COVID_Raw[['Hospitalizations_Raw']].pct_change()
 
 COVID_Raw['Tested_Positive_Ratio'] = (COVID_Raw['Positive_Raw'] / COVID_Raw['Tested_Raw']) * 100
 COVID_Raw['Active_Infections'] = (COVID_Raw['Positive_Cum'] - COVID_Raw['Recovered_Cum'])
@@ -43,7 +42,9 @@ COVID_Raw['Active_Infections'] = (COVID_Raw['Positive_Cum'] - COVID_Raw['Recover
 COVID_Raw[['Positive_2D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(2).mean()
 COVID_Raw[['Positive_3D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(3).mean()
 
-column_order = ['Tested_Raw', 'Tested_Cum', 'Tested_Delta', 'Positive_Raw', 'Positive_Cum', 'Positive_Delta', 'Positive_2D_Mean', 'Positive_3D_Mean', 'Recovered_Raw', 'Recovered_Cum', 'Recovered_Delta', 'Died_Raw', 'Died_Cum', 'Died_Delta', 'Tested_Positive_Ratio', 'Active_Infections']
+COVID_Raw = COVID_Raw.fillna(0)
+
+column_order = ['Tested_Raw', 'Tested_Cum', 'Tested_Delta', 'Positive_Raw', 'Positive_Cum', 'Positive_Delta', 'Positive_2D_Mean', 'Positive_3D_Mean', 'Recovered_Raw', 'Recovered_Cum', 'Recovered_Delta', 'Died_Raw', 'Died_Cum', 'Died_Delta', 'Hospitalizations_Raw', 'Hospitalizations_Cum', 'Hospitalizations_Delta', 'Tested_Positive_Ratio', 'Active_Infections']
 
 
 date = '{:%Y%m%d}'.format(datetime.date.today())
@@ -57,8 +58,6 @@ tickFormatter = mdates.DateFormatter('%m-%d')
 
 described_data_all = addStats(COVID_Raw).fillna(0)
 described_data_l14 = addStats(COVID_Raw.last('14D')).fillna(0)
-
-
 
 with pandas.ExcelWriter('{0}_Kosovo_COVID.xlsx'.format(date)) as writer:
     described_data_l14.to_excel(writer, sheet_name='Statistics (L14)')
@@ -79,6 +78,19 @@ with plt.xkcd():
     deltaFig.legend(loc='upper left')
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases -L14 Days Plot.png', dpi=900)
+
+    CPDelta_df = COVID_Raw[['Hospitalizations_Raw']]
+    deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Hospitalizations -All Days')
+    deltaFig.xaxis.set_major_formatter(tickFormatter)
+    deltaFig.legend(fontsize='xx-small')
+    deltaFig.figure.tight_layout()
+    deltaFig.figure.savefig('Kosovo COVID-19 Hospitalizations -All Days Plot.png', dpi=900)
+
+    CPDelta_df = COVID_Raw[['Hospitalizations_Raw']]
+    deltaFig = CPDelta_df.last('14D').plot(title='Kosovo COVID-19 Hospitalizations -L14 Days')
+    deltaFig.legend(loc='upper left')
+    deltaFig.figure.tight_layout()
+    deltaFig.figure.savefig('Kosovo COVID-19 Hospitalizations -L14 Days Plot.png', dpi=900)
 
     CPDelta_df = COVID_Raw[['Tested_Positive_Ratio']]
     deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 % Positive -All Days')
@@ -113,13 +125,13 @@ with plt.xkcd():
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Active Infections vs Positive -ALL.png', dpi=900)
 
-    CPDelta_df = COVID_Raw[['Tested_Raw', 'Positive_Raw', 'Died_Raw']]
+    CPDelta_df = COVID_Raw[['Tested_Raw', 'Positive_Raw', 'Died_Raw', 'Hospitalizations_Raw']]
     deltaFig = CPDelta_df.last('14D').plot(title='Kosovo COVID-19 Cases Overall -Last 14 Days')
     deltaFig.legend(fontsize='x-small')
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall -Last 14 Days Plot.png', dpi=900)
 
-    CPDelta_df = COVID_Raw[['Tested_Raw', 'Positive_Raw', 'Died_Raw']]
+    CPDelta_df = COVID_Raw[['Tested_Raw', 'Positive_Raw', 'Died_Raw', 'Hospitalizations_Raw']]
     deltaFig = CPDelta_df.last('7D').plot(title='Kosovo COVID-19 Cases Overall -Last 7 Days')
     deltaFig.legend(fontsize='x-small')
     deltaFig.figure.tight_layout()
@@ -160,7 +172,7 @@ with plt.xkcd():
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall -Last 14 Days Bar.png', dpi=600)
 
-    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw']]
+    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw', 'Hospitalizations_Raw']]
     ticks = CPDelta_df.last('14D').index.strftime('%m-%d').values
     deltaFig = CPDelta_df.last('14D').plot.bar(stacked=True, title='Kosovo COVID-19 Cases Overall -Last 14 Days')
     deltaFig.legend(fontsize='xx-small')
@@ -169,7 +181,7 @@ with plt.xkcd():
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall -L14 Days Stacked Bar.png', dpi=900)
 
-    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw']]
+    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw', 'Hospitalizations_Raw']]
     deltaFig = CPDelta_df.last('14D').plot.area(stacked=True, title='Kosovo COVID-19 Cases Overall -Last 14 Days')
     deltaFig.legend(fontsize='xx-small')
     deltaFig.xaxis.set_major_formatter(tickFormatter)
