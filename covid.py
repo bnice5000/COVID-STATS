@@ -116,7 +116,7 @@ with plt.xkcd():
     deltaFig.set_xticklabels(ticks)
     deltaFig.minorticks_off()
     deltaFig.figure.tight_layout()
-    deltaFig.figure.savefig('Kosovo COVID-19 Cases -Last 14 Days Bar.png', dpi=900)
+    deltaFig.figure.savefig('Kosovo COVID-19 Positive & Tested Cases -Last 14 Days Bar.png', dpi=900)
 
     CPDelta_df = COVID_Raw[['Positive_Raw']].last('14D')
     ticks = CPDelta_df.index.strftime('%m-%d').values
@@ -124,7 +124,7 @@ with plt.xkcd():
     deltaFig.set_xticklabels(ticks)
     deltaFig.minorticks_off()
     deltaFig.figure.tight_layout()
-    deltaFig.figure.savefig('Kosovo COVID-19 Cases -Last 14 Days Bar.png', dpi=900)
+    deltaFig.figure.savefig('Kosovo COVID-19 Positive Cases -Last 14 Days Bar.png', dpi=900)
 
     CPDelta_df = COVID_Raw[['Positive_Raw']]
     ticks = CPDelta_df.index.strftime('%m-%d').values
@@ -132,7 +132,7 @@ with plt.xkcd():
     deltaFig.set_xticklabels(ticks)
     deltaFig.minorticks_off()
     deltaFig.figure.tight_layout()
-    deltaFig.figure.savefig('Kosovo COVID-19 Cases -ALL Days Bar.png', dpi=900)
+    deltaFig.figure.savefig('Kosovo COVID-19 Positive Cases -ALL Days Bar.png', dpi=900)
 
     CPDelta_df = COVID_Raw[['Tested_Raw', 'Positive_Raw', 'Tested_Positive_Ratio']].last('14D')
     ticks = CPDelta_df.index.strftime('%m-%d').values
@@ -142,7 +142,7 @@ with plt.xkcd():
     deltaFig.legend(fontsize='xx-small', loc='best')
     deltaFig.figure.set_size_inches(11, 8.5)
     deltaFig.figure.tight_layout()
-    deltaFig.figure.savefig('Kosovo COVID-19 Cases -Last 14 Days Bar.png', dpi=600)
+    deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall -Last 14 Days Bar.png', dpi=600)
 
     CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw']]
     ticks = CPDelta_df.last('14D').index.strftime('%m-%d').values
