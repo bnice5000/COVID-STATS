@@ -92,6 +92,7 @@ with plt.xkcd():
     deltaFig.legend(fontsize='xx-small')
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases 2D Mean -All Days Plot.png', dpi=600)
+    plt.close('all')
 
     CPDelta_df = COVID_Raw[['Hospitalizations_Raw']]
     deltaFig = CPDelta_df.last('14D').plot(title='Kosovo COVID-19 Hospitalizations -L14 Days')
@@ -124,6 +125,7 @@ with plt.xkcd():
     deltaFig.legend(fontsize='xx-small', loc='upper left')
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Active Infections -ALL.png', dpi=600)
+    plt.close('all')
 
     CPDelta_df = COVID_Raw[['Active_Infections']].last('14D')
     deltaFig = CPDelta_df.plot(title='Kosovo Active Infections -L14 Days')
@@ -165,6 +167,7 @@ with plt.xkcd():
     deltaFig.minorticks_off()
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Positive Cases -Last 14 Days Bar.png', dpi=600)
+    plt.close('all)')
 
     CPDelta_df = COVID_Raw[['Positive_Raw']]
     ticks = CPDelta_df.index.strftime('%m-%d').values
@@ -205,9 +208,9 @@ with plt.xkcd():
     ticks = CPDelta_df.index.strftime('%m-%d').values
     deltaFig = CPDelta_df.plot.bar(stacked=True, title='Kosovo COVID-19 POL Chart Overall')
     deltaFig.legend(fontsize='xx-small')
-    deltaFig.set_xticklabels(ticks, fontsize=8)
+    deltaFig.set_xticklabels(ticks, fontsize='xx-small')
     deltaFig.minorticks_off()
-    deltaFig.figure.set_size_inches(11, 8.5)
+    deltaFig.figure.set_size_inches(14, 8.5)
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall POL Stacked Bar.png', dpi=600)
 
@@ -215,9 +218,8 @@ with plt.xkcd():
     ticks = CPDelta_df.index.strftime('%m-%d').values
     deltaFig = CPDelta_df.plot.bar(stacked=True, title='Kosovo COVID-19 POL Chart Overall')
     deltaFig.legend(fontsize='xx-small')
-    deltaFig.set_xticklabels(ticks, fontsize=8)
-    deltaFig.minorticks_off()
-    deltaFig.figure.set_size_inches(11, 8.5)
+    deltaFig.set_xticklabels(ticks, fontsize='xx-small')
+    deltaFig.figure.set_size_inches(14, 8.5)
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall POL_Cum Stacked Bar.png', dpi=600)
 
@@ -228,3 +230,4 @@ with plt.xkcd():
     deltaFig.legend(fontsize='xx-small')
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases wMean -All Days Plot.png', dpi=600)
+    plt.close('all')
