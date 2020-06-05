@@ -6,6 +6,7 @@ import os
 
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
 
 import pandas
 
