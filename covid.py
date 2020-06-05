@@ -189,7 +189,7 @@ with plt.xkcd():
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall -Last 14 Days Bar.png', dpi=600)
 
-    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw', 'Hospitalizations_Raw']]
+    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw']]
     ticks = CPDelta_df.last('14D').index.strftime('%m-%d').values
     deltaFig = CPDelta_df.last('14D').plot.bar(stacked=True, title='Kosovo COVID-19 Cases Overall -Last 14 Days')
     deltaFig.legend(fontsize='xx-small')
@@ -198,7 +198,7 @@ with plt.xkcd():
     deltaFig.figure.tight_layout()
     deltaFig.figure.savefig('Kosovo COVID-19 Cases Overall -L14 Days Stacked Bar.png', dpi=600)
 
-    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw', 'Hospitalizations_Raw']]
+    CPDelta_df = COVID_Raw[['Positive_Raw', 'Recovered_Raw', 'Died_Raw']]
     deltaFig = CPDelta_df.last('14D').plot.area(stacked=True, title='Kosovo COVID-19 Cases Overall -Last 14 Days')
     deltaFig.legend(fontsize='xx-small')
     deltaFig.xaxis.set_major_formatter(tickFormatter)
