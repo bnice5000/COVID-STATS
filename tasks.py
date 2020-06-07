@@ -17,11 +17,13 @@ def build(c):
     c.run('ipython covid.py')
 
 @task
-def push(c, tag=False, message=commit_message):
+def push(c, tag=False, message=''):
     c.run('git add --all')
     c.run('git commit -am {0}'.format(message))
     if tag:
         c.run('git tag {0}'.format(foldername))
+    if not message:
+        message = commit_message
     c.run('git push origin master')
 
 @task
