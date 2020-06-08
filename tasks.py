@@ -25,7 +25,7 @@ def push(c, tag=False, message=''):
     c.run('git add --all')
     if not message:
         message = commit_message
-    c.run('git commit -am {0}'.format(message))
+    c.run('git commit -am "{0}"'.format(message))
     if tag:
         c.run('git tag {0}'.format(foldername))
 
@@ -35,8 +35,7 @@ def push(c, tag=False, message=''):
 @task
 def release(c):
     c.run('zip -j ./Releases/{0}.zip ./Graphics/{0}/*'.format(foldername))
-    c.run(
-        'hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
+    c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
 
 
 @task
