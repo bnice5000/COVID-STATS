@@ -2,7 +2,7 @@ from invoke import task
 import datetime
 
 foldername = '{:%Y%m%d}'.format(datetime.date.today())
-commit_message = '\"Daily push for {0}\"'.format(foldername)
+commit_message = 'Daily push for {0}'.format(foldername)
 
 
 @task
@@ -21,14 +21,13 @@ def build(c):
 
 
 @task
-def push(c, tag=False, message=commit_message):
+def push(c, tag=False, message=''):
     c.run('git add --all')
-    if message != commit_message:
+    if not message:
         message = commit_message
-    c.run('git commit -m "{0}"'.format(message))
+    c.run('git commit -am "{0}"'.format(message))
     if tag:
-        c.run('git tag "{0}"'.format(foldername))
-
+       c.run('git tag {0}'.format(foldername))
     c.run('git push origin master')
 
 
