@@ -27,7 +27,7 @@ def push(c, tag=False, message=''):
         message = commit_message
     c.run('git commit -am "{0}"'.format(message))
     if tag:
-       c.run('git tag {0}'.format(foldername))
+        c.run('git tag {0}'.format(foldername))
     c.run('git push origin master')
 
 
