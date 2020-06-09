@@ -21,13 +21,13 @@ def build(c):
 
 
 @task
-def push(c, tag=False, message=''):
+def push(c, tag=False, message=commit_message):
     c.run('git add --all')
-    if not message:
+    if message != commit_message:
         message = commit_message
-    c.run('git commit -am "{0}"'.format(message))
+    c.run('git commit -m "{0}"'.format(message))
     if tag:
-        c.run('git tag {0}'.format(foldername))
+        c.run('git tag "{0}"'.format(foldername))
 
     c.run('git push origin master')
 
