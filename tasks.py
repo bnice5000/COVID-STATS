@@ -36,6 +36,11 @@ def release(c):
     c.run('zip -j ./Releases/{0}.zip ./Graphics/{0}/*'.format(foldername))
     c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
 
+@task
+def daily(c):
+    build(c)
+    push(c, tag=True)
+    release(c)
 
 @task
 def clean(c):
