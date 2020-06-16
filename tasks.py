@@ -37,7 +37,9 @@ def release(c):
     c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
 
 @task
-def daily(c):
+def daily(c, numbers=''):
+    if numbers:
+        c.run('echo "{0}" >> ./Data/COVID_Raw.csv'.format(numbers))
     build(c)
     push(c, tag=True)
     release(c)
