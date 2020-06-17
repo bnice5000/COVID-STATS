@@ -7,7 +7,10 @@ import os
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures
 
+import numpy
 import pandas
 
 
@@ -38,7 +41,7 @@ COVID_Raw[['Hospitalizations_Cum']] = COVID_Raw[['Hospitalizations_Raw']].cumsum
 COVID_Raw[['Hospitalizations_Delta']] = COVID_Raw[['Hospitalizations_Raw']].pct_change()
 
 COVID_Raw['Tested_Positive_Ratio'] = (COVID_Raw['Positive_Raw'] / COVID_Raw['Tested_Raw']) * 100
-COVID_Raw['Active_Infections'] = (COVID_Raw['Positive_Cum'] - COVID_Raw['Recovered_Cum'])
+COVID_Raw['Active_Infections'] = (COVID_Raw['Positive_Cum'] - (COVID_Raw['Recovered_Cum'] + COVID_Raw['Died_Cum']))
 
 COVID_Raw[['Positive_2D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(2).mean()
 COVID_Raw[['Positive_3D_Mean']] = COVID_Raw[['Positive_Raw']].rolling(3).mean()
@@ -66,6 +69,17 @@ with pandas.ExcelWriter('{0}_Kosovo_COVID.xlsx'.format(date)) as writer:
     COVID_Raw.fillna(0).to_excel(writer, sheet_name='Kosovo Raw Data', columns=column_order)
 
 with plt.xkcd():
+
+    CPDelta_df = COVID_Raw[['Positive_Raw']]
+    CPDelta_df['days_from_start'] = (CPDelta_df.index - CPDelta_df.index[0]).days
+    X = CPDelta_df.days_from_start.values.reshape(-1, 1)  # values converts it into a numpy array
+    Y = CPDelta_df.Positive_Raw.values.reshape(-1, 1)  # -1 means that calculate the dimension of rows, but have 1 column
+    linear_regressor = LinearRegression()  # create object for the class
+    linear_regressor.fit(X, Y)  # perform linear regression
+    Y_pred = linear_regressor.predict(X)  # make predictions
+    plt.scatter(X, Y)
+    plt.plot(X, Y_pred, color='red')
+    plt.savefig('Kosovo COVID-19 Raw wLinReg -All Days Plot.png', dpi=600)
 
     CPDelta_df = COVID_Raw[['Positive_Raw']]
     deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Cases -All Days')
