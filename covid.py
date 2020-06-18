@@ -70,15 +70,16 @@ with pandas.ExcelWriter('{0}_Kosovo_COVID.xlsx'.format(date)) as writer:
 
 with plt.xkcd():
 
-    CPDelta_df = COVID_Raw[['Positive_Raw']]
-    CPDelta_df['days_from_start'] = (CPDelta_df.index - CPDelta_df.index[0]).days
-    X = CPDelta_df.days_from_start.values.reshape(-1, 1)  # values converts it into a numpy array
-    Y = CPDelta_df.Positive_Raw.values.reshape(-1, 1)  # -1 means that calculate the dimension of rows, but have 1 column
+    deltaFig = COVID_Raw.Positive_Raw.plot(title='Kosovo COVID-19 Cases wLin -All Days', label='Positive Cases', zorder=10)
+    Y = COVID_Raw.Positive_Raw.values.reshape(-1, 1)
+    X = COVID_Raw.index.map(datetime.datetime.toordinal).values.reshape(-1, 1)
     linear_regressor = LinearRegression()  # create object for the class
     linear_regressor.fit(X, Y)  # perform linear regression
     Y_pred = linear_regressor.predict(X)  # make predictions
-    plt.scatter(X, Y)
-    plt.plot(X, Y_pred, color='red')
+    deltaFig.xaxis.set_major_formatter(tickFormatter)
+    deltaFig.legend(fontsize='xx-small')
+    deltaFig.figure.tight_layout()
+    plt.plot(X, Y_pred, label='Projected Regression')
     plt.savefig('Kosovo COVID-19 Raw wLinReg -All Days Plot.png', dpi=600)
 
     CPDelta_df = COVID_Raw[['Positive_Raw']]
