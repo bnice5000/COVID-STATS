@@ -7,10 +7,7 @@ import os
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import PolynomialFeatures
 
-import numpy
 import pandas
 
 
