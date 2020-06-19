@@ -73,11 +73,28 @@ with plt.xkcd():
     linear_regressor = LinearRegression()  # create object for the class
     linear_regressor.fit(X, Y)  # perform linear regression
     Y_pred = linear_regressor.predict(X)  # make predictions
+    CPDelta_df = COVID_Raw[['Positive_Raw']]
+    CPDelta_df.insert(0, 'LinReg', Y_pred, True)
+    deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Cases wLin -All Days', zorder=10)
     deltaFig.xaxis.set_major_formatter(tickFormatter)
-    deltaFig.legend(fontsize='xx-small')
+    deltaFig.legend(['Positive Cases', 'Projected Regression'], fontsize='xx-small')
     deltaFig.figure.tight_layout()
-    plt.plot(X, Y_pred, label='Projected Regression')
     plt.savefig('Kosovo COVID-19 Raw wLinReg -All Days Plot.png', dpi=600)
+
+    deltaFig = COVID_Raw.Active_Infections.plot(title='Kosovo COVID-19 Active Infections wLin -All Days', label='Positive Cases', zorder=10)
+    Y = COVID_Raw.Active_Infections.values.reshape(-1, 1)
+    X = COVID_Raw.index.map(datetime.datetime.toordinal).values.reshape(-1, 1)
+    linear_regressor = LinearRegression()  # create object for the class
+    linear_regressor.fit(X, Y)  # perform linear regression
+    Y_pred = linear_regressor.predict(X)  # make predictions
+    CPDelta_df = COVID_Raw[['Active_Infections']]
+    CPDelta_df.insert(0, 'LinReg', Y_pred, True)
+    CPDelta_df.insert(0, 'Mean_Active', COVID_Raw['Active_Infections'].mean(), True)
+    deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Active Infections -All Days', zorder=10)
+    deltaFig.xaxis.set_major_formatter(tickFormatter)
+    deltaFig.legend(['Mean Active Infections', 'Projected Regression', 'Active Infections'], fontsize='small')
+    deltaFig.figure.tight_layout()
+    plt.savefig('Kosovo COVID-19 Raw wLinRegandMean -All Days Plot.png', dpi=600)
 
     CPDelta_df = COVID_Raw[['Positive_Raw']]
     deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Cases -All Days')
