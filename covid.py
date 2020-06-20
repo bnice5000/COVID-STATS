@@ -77,7 +77,7 @@ with plt.xkcd():
     CPDelta_df.insert(0, 'LinReg', Y_pred, True)
     deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Cases wLin -All Days', zorder=10)
     deltaFig.xaxis.set_major_formatter(tickFormatter)
-    deltaFig.legend(['Positive Cases', 'Projected Regression'], fontsize='xx-small')
+    deltaFig.legend(['Projected Regression', 'Positive Cases'], fontsize='xx-small')
     deltaFig.figure.tight_layout()
     plt.savefig('Kosovo COVID-19 Raw wLinReg -All Days Plot.png', dpi=600)
 
