@@ -1,12 +1,5 @@
-bottleneck
-cairosvg
+defusedxml
 invoke
-ipynb-py-convert
-jupyterlab
-matplotlib
-numexpr
 openpyxl
-pandas
 pip-chill
-pyobjc
-scipy
+python-pptx
