@@ -47,7 +47,7 @@ def daily(c, numbers=''):
 @task
 def clean(c):
     c.run('rm -rf ./Graphics/{0}'.format(foldername))
-    c.run('Releases/{0}.zip'.format(foldername))
+    c.run('./Releases/{0}.zip'.format(foldername))
 
 
 @task
