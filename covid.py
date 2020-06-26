@@ -81,6 +81,7 @@ with plt.xkcd():
     deltaFig.xaxis.set_major_formatter(tickFormatter)
     deltaFig.legend(['5% Diplomacy Strong Measure', 'Projected Regression', '% Positive Tests'], fontsize='small')
     deltaFig.figure.tight_layout()
+    plt.savefig('Kosovo COVID-19 Raw wLinRegand5pct -All Days Plot.png', dpi=600)
 
     deltaFig = COVID_Raw.Positive_Raw.plot(title='Kosovo COVID-19 Cases wLin -All Days', label='Positive Cases', zorder=10)
     Y = COVID_Raw.Positive_Raw.values.reshape(-1, 1)
