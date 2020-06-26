@@ -77,7 +77,7 @@ with plt.xkcd():
     CPDelta_df = COVID_Raw[['Tested_Positive_Ratio']].last(TDays)
     CPDelta_df.insert(0, 'LinReg', Y_pred, True)
     CPDelta_df.insert(0, '5%_Dip_Strong', 5, True)
-    deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Active Infections -{0}'.format(TDays), zorder=10)
+    deltaFig = CPDelta_df.plot(title='Kosovo COVID-19 Tested % Positive -{0}'.format(TDays), zorder=10)
     deltaFig.xaxis.set_major_formatter(tickFormatter)
     deltaFig.legend(['5% Diplomacy Strong Measure', 'Projected Regression', '% Positive Tests'], fontsize='small')
     deltaFig.figure.tight_layout()
