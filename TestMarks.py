@@ -3,7 +3,6 @@ import matplotlib.dates as mdates
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt  # To visualize
 import pandas  # To read data
-from sklearn.linear_model import LinearRegression
 
 import pprint
 
@@ -30,12 +29,19 @@ with plt.xkcd():
     deltaFig.minorticks_off()
     deltaFig.set_xticklabels(ticks, fontsize='xx-small')
     deltaFig.figure.set_size_inches(17, 11)
-    deltaFig.legend(['Positive Cases', 'Last 14 Days'], fontsize='small', loc='upper left')
-    start = deltaFig.patches[-14].get_x() - 0.2
-    end = deltaFig.patches[1].get_y()
-    width = deltaFig.patches[-1].get_x() + deltaFig.patches[-1].get_width() - start
+    deltaFig.legend(['Positive Cases'], fontsize='small', loc='upper left')
+    x = deltaFig.patches[-14].get_x() - 0.2
+    y = deltaFig.patches[1].get_y() + 0.2
+    width = deltaFig.patches[-1].get_x() + deltaFig.patches[-1].get_width() - x
     height = CPDelta_df.Positive_Raw.last(TDays).max() + 2
-    rect = patches.Rectangle((start, end), width, height, linewidth=2, linestyle='--', color='red', fill=False, zorder=10)
+    rect = patches.Rectangle((x, y), width, height, linewidth=2, linestyle='--', color='red', fill=False, zorder=10)
+    # pprint.pprint(dir(rect))
     deltaFig.add_patch(rect)
     deltaFig.figure.tight_layout()
+    deltaFig.annotate(
+        '{0} Zoom'.format(TDays), xy=(x, height), xycoords='data',
+        xytext=(0.8, 0.95), textcoords='axes fraction',
+        arrowprops=dict(facecolor='red', shrink=0.05),
+        horizontalalignment='right', verticalalignment='top'
+    )
     plt.savefig('../../../Desktop/Kosovo COVID-19 Positive Cases -ALL with {0} Box Days Bar.png'.format(TDays), dpi=600)
