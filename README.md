@@ -35,7 +35,7 @@ If you would like to run it using the invoke system, the following command will 
 
 ## Calculated Elements
 `Tested_Positive_Ratio` is  `(Positive_Raw / Tested_Raw) * 100`  
-`Active_Infections` is  `Recovered_Cum - Positive_Cum`  
+`Active_Infections` is  `Recovered_Cum - Positive_Cum + Died_Cum`  
 
 # Just the Facts
 
