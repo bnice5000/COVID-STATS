@@ -50,7 +50,7 @@ column_order = ['Tested_Raw', 'Tested_Cum', 'Tested_Delta', 'Positive_Raw', 'Pos
 
 
 date = '{:%Y%m%d}'.format(datetime.date.today())
-folder = './Graphics/{0}'.format(date)
+folder = './Output/{0}'.format(date)
 TDays = '14D'
 
 os.makedirs(folder, 0o755, exist_ok=True)

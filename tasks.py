@@ -17,7 +17,8 @@ def convertpy(c):
 
 @task
 def build(c):
-    c.run('ipython covid.py')
+    c.run('python covid.py')
+    c.run('python JH_COVID_DATA_ETL.py')
 
 
 @task
@@ -33,8 +34,9 @@ def push(c, tag=False, message=''):
 
 @task
 def release(c):
-    c.run('zip -j ./Releases/{0}.zip ./Graphics/{0}/*'.format(foldername))
+    c.run('zip -j ./Releases/{0}.zip ./Output/{0}/*'.format(foldername))
     c.run('hub release create -o -a ./Releases/{0}.zip -m \"Covid Graphs for {0}\" {0}'.format(foldername))
+
 
 @task
 def daily(c, numbers=''):
@@ -44,9 +46,10 @@ def daily(c, numbers=''):
     push(c, tag=True)
     release(c)
 
+
 @task
 def clean(c):
-    c.run('rm -rf ./Graphics/{0}'.format(foldername))
+    c.run('rm -rf ./Output/{0}'.format(foldername))
     c.run('./Releases/{0}.zip'.format(foldername))
 
 
