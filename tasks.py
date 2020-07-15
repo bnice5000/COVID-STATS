@@ -16,9 +16,13 @@ def convertpy(c):
 
 
 @task
-def build(c):
-    c.run('python covid.py')
-    c.run('python JH_COVID_DATA_ETL.py')
+def build(c, bg=False):
+    if bg:
+        c.run('python covid.py &')
+        c.run('python JH_COVID_DATA_ETL.py &')
+    else:
+        c.run('python covid.py')
+        c.run('python JH_COVID_DATA_ETL.py')
 
 
 @task
